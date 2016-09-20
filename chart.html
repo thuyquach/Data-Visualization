@@ -24,10 +24,10 @@
         Dimple.js Chart construction code
       */
           var myChart = new dimple.chart(svg, data);
-          var x = myChart.addMeasureAxis("x", "HR" ); 
+          var x = myChart.addMeasureAxis("x", "avg" ); 
           var y1 = myChart.addCategoryAxis("y", "handedness");
           myChart.addSeries(null, dimple.plot.bar);
-          myChart.aggregate = dimple.aggregateMethod.HR;
+          myChart.aggregate = dimple.aggregateMethod.avg;
     
           myChart.draw();
         };
