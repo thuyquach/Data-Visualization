@@ -2,8 +2,12 @@
 <html>
 <head>
   <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dimple/2.2.0/dimple.latest.js"></script>
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
+
+    
 
     <script type="text/javascript">
 
@@ -35,14 +39,14 @@
          var x = myChart.addCategoryAxis("x", "handedness");
          var y1 = myChart.addMeasureAxis("y", "avg");
          var y2 = myChart.addMeasureAxis("y", "HR");
-         //y1.tickSize([0,0.4])
+        
     
         
-         // Add the bubble mapped to the second y axis
+         // Add the bar chart mapped to the second y axis
         myChart.addSeries("Homerun", dimple.plot.bar, [x, y2]);
           
-          myChart.aggregate = dimple.aggregateMethod.avg;
-         myChart.barGap = 0.05;
+         myChart.aggregate = dimple.aggregateMethod.sum;
+    
         
           // Add series for minimum, average and maximum avg
         
@@ -94,16 +98,6 @@
               .attr("height", height + margin)
             .append('g')
                 .attr('class','chart');
-          data.forEach(function(d) {
-                    d.name = +d.name;
-                    d.handedness = +d.handedness;
-                    d.height = +d.height;
-                    // convert "Length" column to number
-                    d.Count = 1;
-                    d.weight = +d.weight;
-                    d.avg = +d.avg;
-                    d.HR = +d.HR;
-                });
       /*
         Dimple.js Chart construction code
       */
