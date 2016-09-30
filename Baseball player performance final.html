@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
-
 <style>
     /* Title */
     h2 {
@@ -23,14 +22,12 @@
         text-align: center;
         font-style: italic;
     }
-    </style>
-    
-
-    <script type="text/javascript">
+</style>
+        <script type="text/javascript">
         "use strict";
-          var margin = 50,
-              width = 750 - margin,
-              height = 450 - margin;
+        var margin = 50,
+            width = 750 - margin,
+            height = 450 - margin;
     /* This function the outline of the page with a title, abstract and three plots */
     function draw(data) {
         //append title
@@ -44,15 +41,11 @@
             .text("Left-handed baseball players have higher number of home run and batting average (Fig.1). Though majority of player are hand-righted, the number of left-handed player was 316 out of 1145 total number of player (27%). It is very interesting since there is only 12% of general public are left-handed. Does having a left-handed giving player some advantages? Yes, they do. 1) When a right-handed batter swings, his momentum takes him toward third base. He has to re-start toward first base. But a lefty’s swing takes him toward first base. 2) Left-handed hitters fair better when against righty pitchers, who are the majority,  because the pitch looks like it starts out right in front of him the whole way rather than behind righty's shoulder. So, if you borned left-handed and love playing baseball, consider it as your advantages.") 
         
         // add a link to explain how baseball play
-        
         d3.select("body")
             .append("p")
             .append("text")
             .text("Please click me to learn how baseball plays.")
             .on("click", function() { window.open("https://simple.wikipedia.org/wiki/Baseball"); });
-            
-
-
         
         //append handedness vs homeruns and batting average
         two_y_bar_scatter_plot(data);
@@ -82,39 +75,30 @@
         y1.tickFormat = ',.2f';
         y2.tickFormat = '0f';
         
-    
-        
          // Add the bar chart mapped to the second y axis
         var Homerun = myChart.addSeries("Home runs (HR)", dimple.plot.bar, [x, y2]);
         Homerun.aggregate = dimple.aggregateMethod.avg;
     
-        
-          // Add series for average and maximum avg
-        
+        // Add series for average and maximum avg
         var vag = myChart.addSeries("Average Batting", dimple.plot.bubble, [x, y1]);
         vag.aggregate = dimple.aggregateMethod.avg;
-        myChart.addSeries("Average Batting", dimple.plot.line, [x, y1])
-            .aggregate = dimple.aggregateMethod.avg;
         myChart.assignColor("Average Batting", "red", "black");
+        
         var max = myChart.addSeries("Maximum Batting", dimple.plot.bubble, [x, y1]);
         max.aggregate = dimple.aggregateMethod.max;
-        myChart.addSeries("Maximum Batting", dimple.plot.line, [x, y1])
-            .aggregate = dimple.aggregateMethod.max;
         myChart.assignColor("Maximum Batting", "yellow", "black");
         
         //add legend
-        
         var myLegend = myChart.addLegend(65, 10, 550, 20, "right");
         myLegend.fontSize = "15px";
         
         //add font size
         x.fontSize = "15px";
         y1.fontSize = "15px";
-        y2.fontSize= "15pz";
+        y2.fontSize = "15px";
         
-       
-          myChart.draw();
-        };
+        myChart.draw();
+    };
     /* Plots a bar graph of total player numbers grouped by handedness */
         
     function player_bar_plot(data) {
@@ -134,7 +118,7 @@
         x.addOrderRule(["B", "R", "L"]);
         var y = myChart.addMeasureAxis("y", "name");
         y.title = "Number of player";
-        myChart.addSeries(null, dimple.plot.bar);
+        var mySeries = myChart.addSeries(null, dimple.plot.bar);
         
         // Increase the font size to 15px
         x.fontSize = "15px";
@@ -144,12 +128,14 @@
         myChart.defaultColors = [
             new dimple.color("gray") 
                                     ];
+        mySeries.getTooltipText = function (e) {
+                return [
+                    "handedness: " + e.xField[0],
+                    "number of players: " +  e.yValue
+                ];
+            };
+        
         myChart.draw();
-        
-        
-
-    
-
     };
         
       </script>
